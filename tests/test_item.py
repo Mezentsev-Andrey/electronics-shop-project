@@ -6,7 +6,8 @@ from src.item import Item
 @pytest.fixture
 def setup_items():
     """
-    Фикстура предоставляющая тестам стандартный комплект данных для проверки методов класса.
+    Фикстура предоставляющая тестам стандартный комплект данных
+    для проверки методов класса.
     """
     item1 = Item("Товар1", 1000, 10)
     item2 = Item("Товар2", 5000, 50)
@@ -15,7 +16,8 @@ def setup_items():
 
 def test_calculate_total_price(setup_items):
     """
-    Тестовая функция, которая проверяет, что общая стоимость рассчитывается верно.
+    Тестовая функция, которая проверяет, что общая стоимость
+    рассчитывается верно.
     """
     item1, item2 = setup_items
     total_price_item1 = item1.calculate_total_price()
@@ -35,7 +37,8 @@ def test_apply_discount(setup_items):
 
 def test_total_price_after_discount(setup_items):
     """
-    Тестовая функция проверяющая, что общая стоимость после скидки рассчитывается верно.
+    Тестовая функция проверяющая, что общая стоимость после скидки
+    рассчитывается верно.
     """
     item1, _ = setup_items
     item1.apply_discount(10)

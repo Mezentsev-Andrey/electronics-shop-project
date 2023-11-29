@@ -3,6 +3,29 @@ import pytest
 from src.item import Item
 
 
+def test_item_name_setter():
+    """
+    Тестовая функция проверяющая длину названия товаров.
+    """
+    # Создаем экземпляр класса Item
+    item = Item("ТестовоеИмя", 1000, 50)
+
+    # Устанавливаем новое имя, которое должно быть обрезано
+    item.name = "НовоеДлинноеИмя"
+    assert item._Item__name == "НовоеДлинн"
+
+    # Устанавливаем новое имя, которое должно быть сохранено без изменений
+    item.name = "Короткое"
+    assert item._Item__name == "Короткое"
+
+    # Устанавливаем новое имя, которое должно быть обрезано до 10 символов
+    item.name = "ОченьДлинноеИмяКотороеДолжноБытьОбрезано"
+    assert item._Item__name == "ОченьДлинн"
+
+    # Устанавливаем новое имя с длиной 10 символов, которое должно быть сохранено без изменений
+    item.name = "МоёИмяТоже"
+    assert item._Item__name == "МоёИмяТоже"
+
 @pytest.fixture
 def setup_items():
     """
@@ -22,7 +45,7 @@ def test_calculate_total_price(setup_items):
     item1, item2 = setup_items
     total_price_item1 = item1.calculate_total_price()
     total_price_item2 = item2.calculate_total_price()
-    assert total_price_item1 == 1000 * 10 * 1.0  #
+    assert total_price_item1 == 1000 * 10 * 1.0
     assert total_price_item2 == 5000 * 50 * 1.0
 
 
@@ -46,10 +69,41 @@ def test_total_price_after_discount(setup_items):
     assert total_price_item1_after_discount == 1000 * 10 * 0.9
 
 
-def test_all_items_list(setup_items):
+@pytest.fixture
+def sample_csv_data():
     """
-    Тестовая функция, которая проверяет, что элемент был добавлен в список all.
+    Фикстура предоставляющая тестам стандартный комплект данных
+    для тестирования.
     """
-    item1, item2 = setup_items
-    assert item1 in Item.all
-    assert item2 in Item.all
+    csv_data = "name,price,quantity\n" "Item1,10.5,3\n" "Item2,20.2,5\n" "Item3,5.0,2"
+    return csv_data
+
+
+def test_instantiate_from_csv(sample_csv_data):
+    # Записываем временный файл с данными
+    file_path = "test_data.csv"
+    with open(file_path, "w") as file:
+        file.write(sample_csv_data)
+
+    # Проверяем, что метод instantiate_from_csv корректно создает
+    # экземпляры класса из CSV
+    Item.instantiate_from_csv(file_path)
+    assert len(Item.all) == 3
+
+    # Проверяем, что созданные экземпляры имеют правильные значения атрибутов
+    assert Item.all[0].name == "Item1"
+    assert Item.all[0].price == 10
+    assert Item.all[0].quantity == 3
+
+    # Проверяем, что файл очищается перед загрузкой новых данных
+    Item.instantiate_from_csv(file_path)
+    assert len(Item.all) == 3
+
+
+def test_string_to_number():
+    """
+    Проверяем, что метод string_to_number корректно преобразует строки в числа
+    """
+    assert Item.string_to_number("10.5") == 10
+    assert Item.string_to_number("20.2") == 20
+    assert Item.string_to_number("5.0") == 5

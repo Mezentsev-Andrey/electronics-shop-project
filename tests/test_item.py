@@ -22,7 +22,7 @@ def test_calculate_total_price(setup_items):
     item1, item2 = setup_items
     total_price_item1 = item1.calculate_total_price()
     total_price_item2 = item2.calculate_total_price()
-    assert total_price_item1 == 1000 * 10 * 1.0  #
+    assert total_price_item1 == 1000 * 10 * 1.0
     assert total_price_item2 == 5000 * 50 * 1.0
 
 
@@ -32,7 +32,7 @@ def test_apply_discount(setup_items):
     """
     item1, _ = setup_items
     item1.apply_discount(10)
-    assert item1.price == 1000 * 0.9  #
+    assert item1.price == 1000 * 0.9
 
 
 def test_total_price_after_discount(setup_items):
@@ -53,3 +53,31 @@ def test_all_items_list(setup_items):
     item1, item2 = setup_items
     assert item1 in Item.all
     assert item2 in Item.all
+
+
+def test_item_creation():
+    """
+    Тестовая функция проверяющая, что при создании экземпляра класса Item
+    с указанными параметрами, соответствующие атрибуты (name, price, quantity)
+    присваиваются корректным значениям.
+    """
+    item = Item("Смартфон", 10000, 20)
+    assert item.name == "Смартфон"
+    assert item.price == 10000
+    assert item.quantity == 20
+
+
+def test_item_repr():
+    """
+    Тестовая функция для проверки магического метода __str__
+    """
+    item = Item("Смартфон", 10000, 20)
+    assert repr(item) == "Item('Смартфон', 10000, 20)"
+
+
+def test_item_str():
+    """
+    Тестовая функция для проверки магического метода __repr__
+    """
+    item = Item("Смартфон", 10000, 20)
+    assert str(item) == "Смартфон"

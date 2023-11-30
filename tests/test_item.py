@@ -22,9 +22,11 @@ def test_item_name_setter():
     item.name = "ОченьДлинноеИмяКотороеДолжноБытьОбрезано"
     assert item._Item__name == "ОченьДлинн"
 
-    # Устанавливаем новое имя с длиной 10 символов, которое должно быть сохранено без изменений
+    # Устанавливаем новое имя с длиной 10 символов, которое должно быть
+    # сохранено без изменений
     item.name = "МоёИмяТоже"
     assert item._Item__name == "МоёИмяТоже"
+
 
 @pytest.fixture
 def setup_items():
@@ -72,14 +74,19 @@ def test_total_price_after_discount(setup_items):
 @pytest.fixture
 def sample_csv_data():
     """
-    Фикстура предоставляющая тестам стандартный комплект данных
-    для тестирования.
+    Фикстура предоставляющая тестам стандартный комплект
+    данных для тестирования.
     """
     csv_data = "name,price,quantity\n" "Item1,10.5,3\n" "Item2,20.2,5\n" "Item3,5.0,2"
     return csv_data
 
 
 def test_instantiate_from_csv(sample_csv_data):
+    """
+    Тестовая функция позволяющая удостовериться, что метод правильно
+    обрабатывает CSV-файл, создавая экземпляры класса Item с правильными
+    значениями атрибутов.
+    """
     # Записываем временный файл с данными
     file_path = "test_data.csv"
     with open(file_path, "w") as file:
@@ -102,7 +109,8 @@ def test_instantiate_from_csv(sample_csv_data):
 
 def test_string_to_number():
     """
-    Проверяем, что метод string_to_number корректно преобразует строки в числа
+    Тестовая функция проверяющая, что метод string_to_number
+    корректно преобразует строки в числа.
     """
     assert Item.string_to_number("10.5") == 10
     assert Item.string_to_number("20.2") == 20

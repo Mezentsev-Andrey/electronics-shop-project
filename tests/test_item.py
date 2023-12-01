@@ -55,29 +55,35 @@ def test_all_items_list(setup_items):
     assert item2 in Item.all
 
 
-def test_item_creation():
+@pytest.fixture
+def item():
+    """
+    Фикстура предоставляющая тестам стандартный комплект данных
+    для проверки магических методов.
+    """
+    return Item("Смартфон", 10000, 20)
+
+
+def test_item_creation(item):
     """
     Тестовая функция проверяющая, что при создании экземпляра класса Item
     с указанными параметрами, соответствующие атрибуты (name, price, quantity)
     присваиваются корректным значениям.
     """
-    item = Item("Смартфон", 10000, 20)
     assert item.name == "Смартфон"
     assert item.price == 10000
     assert item.quantity == 20
 
 
-def test_item_repr():
+def test_item_repr(item):
     """
     Тестовая функция для проверки магического метода __str__
     """
-    item = Item("Смартфон", 10000, 20)
     assert repr(item) == "Item('Смартфон', 10000, 20)"
 
 
-def test_item_str():
+def test_item_str(item):
     """
     Тестовая функция для проверки магического метода __repr__
     """
-    item = Item("Смартфон", 10000, 20)
     assert str(item) == "Смартфон"

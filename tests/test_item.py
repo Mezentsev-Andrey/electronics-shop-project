@@ -86,7 +86,8 @@ def sample_csv_data():
     Фикстура предоставляющая тестам стандартный комплект
     данных для тестирования.
     """
-    csv_data = "name,price,quantity\n" "Item1,10.5,3\n" "Item2,20.2,5\n" "Item3,5.0,2"
+    csv_data = "name,price,quantity\n" "Item1,10.5,3\n" "Item2,20.2,5\n" \
+               "Item3,5.0,2"
     return csv_data
 
 
@@ -158,3 +159,42 @@ def test_item_str(item):
     Тестовая функция для проверки магического метода __repr__
     """
     assert str(item) == "Смартфон"
+
+
+def test_add_valid_objects():
+    """
+    Тестовая функция проверяющая корректность сложения двух
+    объектов класса Item.
+    """
+    item1 = Item("Item1", 10000, 5)
+    item2 = Item("Item2", 15000, 3)
+    result = item1 + item2
+    assert result == 8
+
+
+def test_add_invalid_objects():
+    """
+    Тестовая функция проверяющая обработку ошибки при попытке
+    сложения объекта класса Item с недопустимым объектом.
+    """
+    item1 = Item("Item1", 10000, 5)
+    invalid_object = "invalid"  # Передаем недопустимый объект для сложения
+    with pytest.raises(ValueError, match="Складывать можно только "
+                                         "объекты Item и дочерние от них."):
+        assert item1 + invalid_object
+
+
+def test_add_different_types():
+    """
+    Тестовая функция проверяющая ошибки при сложении объекта Item
+    с объектом другого класса.
+    """
+    item1 = Item("Item1", 10000, 5)
+
+    class AnotherClass:
+        quantity = 3
+
+    item2 = AnotherClass()  # Передаем объект другого класса
+    with pytest.raises(ValueError, match="Складывать можно только объекты Item"
+                                         " и дочерние от них."):
+        assert item1 + item2

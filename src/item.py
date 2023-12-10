@@ -9,7 +9,7 @@ class Item:
     """
 
     pay_rate = 1.0
-    all = []
+    all = []  # type: ignore
 
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
@@ -23,10 +23,10 @@ class Item:
         self.quantity = quantity
         self.all.append(self)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Item('{self.name}', {self.price}, {self.quantity})"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.name}"
 
     @property
@@ -54,7 +54,7 @@ class Item:
         """
         return self.price * self.quantity * self.pay_rate
 
-    def apply_discount(self, discount) -> None:
+    def apply_discount(self, discount: int | float) -> None:
         """
         Применяет установленную скидку для конкретного товара.
         """
@@ -76,10 +76,18 @@ class Item:
                 cls(name, price, quantity)
 
     @staticmethod
-    def string_to_number(string: str):
+    def string_to_number(string: str) -> int:
         """
         Статический метод, возвращающий число из числа-строки.
         :param string: число в виде строки.
         :return: преобразованное число.
         """
         return int(math.floor(float((string.replace(",", ".")))))
+
+    def __add__(self, other: Any) -> int:
+        """
+        Функция, для сложения атрибутов классов.
+        """
+        if isinstance(other, self.__class__):
+            return self.quantity + other.quantity
+        raise ValueError("Складывать можно только объекты Item и дочерние от них.")

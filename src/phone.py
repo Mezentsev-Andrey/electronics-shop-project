@@ -22,7 +22,7 @@ class Phone(Item):
     def number_of_sim(self, sim_card: int) -> None:
         """
         Функция, которая проверяет количество физических SIM-карт
-        (должно быть целым числом, больше нуля)
+        (должно быть целым числом, больше нуля).
         """
         if sim_card <= 0:
             raise ValueError("Количество физических SIM-карт должно быть целым числом больше нуля.")
@@ -32,13 +32,14 @@ class Phone(Item):
     def __str__(self) -> str:
         """
         Магический метод для отображения информации об объекте класса
-        (для пользователей)
+        (для пользователей).
         """
         return self.name
 
     def __repr__(self) -> str:
         """
         Магический метод для отображения информации об объекте класса
-        (для разработчиков)
+        (для разработчиков).
         """
-        return f"{self.__class__.__name__}('{self.name}', {self.price}, {self.quantity}, {self.number_of_sim})"
+        return (f"{self.__class__.__name__}('{self.name}', {self.price}, "
+                f"{self.quantity}, {self.number_of_sim})")

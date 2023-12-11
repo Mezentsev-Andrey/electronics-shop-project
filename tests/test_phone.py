@@ -23,6 +23,7 @@ def test_phone_set_number_of_sim():
     phone.number_of_sim = 2
     assert phone.number_of_sim == 2
 
+
 def test_number_of_sim_setter():
     """
     Тестовая функция для проверки сеттера числа SIM-карт объекта Phone.
@@ -32,8 +33,7 @@ def test_number_of_sim_setter():
         phone.number_of_sim = -1
         assert False, "Expected a ValueError to be raised"
     except ValueError as error:
-        assert str(error) == ('Количество физических SIM-карт'
-                              ' должно быть целым числом больше нуля.')
+        assert str(error) == "Количество физических SIM-карт должно быть целым числом больше нуля."
 
 
 def test_phone_str_representation():

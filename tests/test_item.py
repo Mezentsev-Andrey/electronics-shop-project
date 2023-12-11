@@ -86,8 +86,7 @@ def sample_csv_data():
     Фикстура предоставляющая тестам стандартный комплект
     данных для тестирования.
     """
-    csv_data = "name,price,quantity\n" "Item1,10.5,3\n" "Item2,20.2,5\n" \
-               "Item3,5.0,2"
+    csv_data = "name,price,quantity\n" "Item1,10.5,3\n" "Item2,20.2,5\n" "Item3,5.0,2"
     return csv_data
 
 
@@ -179,8 +178,7 @@ def test_add_invalid_objects():
     """
     item1 = Item("Item1", 10000, 5)
     invalid_object = "invalid"  # Передаем недопустимый объект для сложения
-    with pytest.raises(ValueError, match="Складывать можно только "
-                                         "объекты Item и дочерние от них."):
+    with pytest.raises(ValueError, match="Складывать можно только объекты Item и дочерние от них."):
         assert item1 + invalid_object
 
 
@@ -195,6 +193,5 @@ def test_add_different_types():
         quantity = 3
 
     item2 = AnotherClass()  # Передаем объект другого класса
-    with pytest.raises(ValueError, match="Складывать можно только объекты Item"
-                                         " и дочерние от них."):
+    with pytest.raises(ValueError, match="Складывать можно только объекты Item и дочерние от них."):
         assert item1 + item2

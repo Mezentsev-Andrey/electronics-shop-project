@@ -6,8 +6,7 @@ class Phone(Item):
     Наследуемый класс от Item.
     """
 
-    def __init__(self, name: str, price: float, quantity: int,
-                 number_of_sim: int):
+    def __init__(self, name: str, price: float, quantity: int, number_of_sim: int):
         super().__init__(name, price, quantity)
         self.__number_of_sim = number_of_sim
 
@@ -41,5 +40,4 @@ class Phone(Item):
         Магический метод для отображения информации об объекте класса
         (для разработчиков).
         """
-        return (f"{self.__class__.__name__}('{self.name}', {self.price}, "
-                f"{self.quantity}, {self.number_of_sim})")
+        return f"{self.__class__.__name__}('{self.name}', {self.price}, " f"{self.quantity}, {self.number_of_sim})"

@@ -1,6 +1,8 @@
+from unittest.mock import mock_open, patch
+
 import pytest
 
-from src.item import Item
+from src.item import InstantiateCSVError, Item
 
 
 def test_item_name_setter():
@@ -114,6 +116,25 @@ def test_instantiate_from_csv(sample_csv_data):
     # Проверяем, что файл очищается перед загрузкой новых данных
     Item.instantiate_from_csv(file_path)
     assert len(Item.all) == 3
+
+
+def test_instantiate_from_csv_file_not_found():
+    """
+    Тестовая функция проверяющая, что исключение FileNotFoundError возникает при попытке
+    создания экземпляра класса Item из CSV файла, который не существует.
+    """
+    with pytest.raises(FileNotFoundError, match="Отсутствует файл item.csv"):
+        Item.instantiate_from_csv(file_path="nonexistent_file.csv")
+
+
+def test_instantiate_from_csv_file_corrupted():
+    """
+    Тестовая функция проверяющая, что исключение InstantiateCSVError возникает при попытке
+    создания экземпляра класса Item из CSV файла с поврежденными данными.
+    """
+    with patch("builtins.open", mock_open(read_data="corrupted_data")):
+        with pytest.raises(InstantiateCSVError, match="Файл item.csv поврежден"):
+            Item.instantiate_from_csv(file_path="test.csv")
 
 
 def test_string_to_number():

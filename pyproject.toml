@@ -41,4 +41,4 @@ line-length = 119
 exclude = '.venv'
 
 [tool.isort]
-line_length = 110
+line_length = 120

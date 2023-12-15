@@ -5,8 +5,9 @@ class MixinLanguage:
     """
     Миксин-класс для хранения и изменения раскладки клавиатуры.
     """
+
     def __init__(self) -> None:
-        self.__language = 'EN'
+        self.__language = "EN"
 
     @property
     def language(self) -> str:
@@ -27,7 +28,8 @@ class Keyboard(Item, MixinLanguage):
     """
     Класс для товара "клавиатура".
     """
+
     def __init__(self, name: str, price: float, quantity: int) -> None:
-        """ Создание экземпляра класса Keyboard."""
+        """Создание экземпляра класса Keyboard."""
         super().__init__(name, price, quantity)
         MixinLanguage.__init__(self)
